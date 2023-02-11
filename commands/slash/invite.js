@@ -1,5 +1,5 @@
-const { MessageActionRow, MessageButton, MessageEmbed } = require("discord.js");
-const SlashCommand = require("../../lib/SlashCommand");
+const { MessageActionRow, MessageButton, MessageEmbed } = require("discord.js")
+const SlashCommand = require("../../lib/SlashCommand")
 
 const command = new SlashCommand()
 	.setName("invite")
@@ -21,10 +21,12 @@ const command = new SlashCommand()
 								client.config.clientId
 							}&permissions=${
 								client.config.permissions
-							}&scope=${ client.config.scopes.toString().replace(/,/g, "%20") }`,
-						),
+							}&scope=${client.config.scopes
+								.toString()
+								.replace(/,/g, "%20")}`
+						)
 				),
 			],
-		});
-	});
-module.exports = command;
+		})
+	})
+module.exports = command

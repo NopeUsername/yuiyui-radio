@@ -7,10 +7,10 @@
 
 const Auth = (req, res, next) => {
 	if (!req.user) {
-		return res.redirect("/login");
+		return res.redirect("/login")
 	} else {
-		next();
+		next()
 	}
-};
+}
 
-module.exports = Auth;
+module.exports = Auth

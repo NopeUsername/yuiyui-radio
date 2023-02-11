@@ -1,5 +1,5 @@
-const SlashCommand = require("../../lib/SlashCommand");
-const { MessageEmbed } = require("discord.js");
+const SlashCommand = require("../../lib/SlashCommand")
+const { MessageEmbed } = require("discord.js")
 
 const command = new SlashCommand()
 	.setName("volume")
@@ -8,17 +8,17 @@ const command = new SlashCommand()
 		option
 			.setName("amount")
 			.setDescription("Amount of volume you want to change. Ex: 10")
-			.setRequired(false),
+			.setRequired(false)
 	)
 	.setRun(async (client, interaction) => {
-		let channel = await client.getChannel(client, interaction);
+		let channel = await client.getChannel(client, interaction)
 		if (!channel) {
-			return;
+			return
 		}
-		
-		let player;
+
+		let player
 		if (client.manager) {
-			player = client.manager.players.get(interaction.guild.id);
+			player = client.manager.players.get(interaction.guild.id)
 		} else {
 			return interaction.reply({
 				embeds: [
@@ -26,9 +26,9 @@ const command = new SlashCommand()
 						.setColor("RED")
 						.setDescription("Lavalink node is not connected"),
 				],
-			});
+			})
 		}
-		
+
 		if (!player) {
 			return interaction.reply({
 				embeds: [
@@ -37,32 +37,32 @@ const command = new SlashCommand()
 						.setDescription("There is no music playing."),
 				],
 				ephemeral: true,
-			});
+			})
 		}
-		
-		let vol = interaction.options.getNumber("amount");
+
+		let vol = interaction.options.getNumber("amount")
 		if (!vol || vol < 1 || vol > 125) {
 			return interaction.reply({
 				embeds: [
 					new MessageEmbed()
 						.setColor(client.config.embedColor)
 						.setDescription(
-							`:loud_sound: | Current volume **${ player.volume }**`,
+							`:loud_sound: | Current volume **${player.volume}**`
 						),
 				],
-			});
+			})
 		}
-		
-		player.setVolume(vol);
+
+		player.setVolume(vol)
 		return interaction.reply({
 			embeds: [
 				new MessageEmbed()
 					.setColor(client.config.embedColor)
 					.setDescription(
-						`:loud_sound: | Successfully set volume to **${ player.volume }**`,
+						`:loud_sound: | Successfully set volume to **${player.volume}**`
 					),
 			],
-		});
-	});
+		})
+	})
 
-module.exports = command;
+module.exports = command

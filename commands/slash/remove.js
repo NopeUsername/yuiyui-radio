@@ -1,5 +1,5 @@
-const SlashCommand = require("../../lib/SlashCommand");
-const { MessageEmbed } = require("discord.js");
+const SlashCommand = require("../../lib/SlashCommand")
+const { MessageEmbed } = require("discord.js")
 
 const command = new SlashCommand()
 	.setName("remove")
@@ -8,20 +8,20 @@ const command = new SlashCommand()
 		option
 			.setName("number")
 			.setDescription("Enter track number.")
-			.setRequired(true),
+			.setRequired(true)
 	)
-	
+
 	.setRun(async (client, interaction) => {
-		const args = interaction.options.getNumber("number");
-		
-		let channel = await client.getChannel(client, interaction);
+		const args = interaction.options.getNumber("number")
+
+		let channel = await client.getChannel(client, interaction)
 		if (!channel) {
-			return;
+			return
 		}
-		
-		let player;
+
+		let player
 		if (client.manager) {
-			player = client.manager.players.get(interaction.guild.id);
+			player = client.manager.players.get(interaction.guild.id)
 		} else {
 			return interaction.reply({
 				embeds: [
@@ -29,9 +29,9 @@ const command = new SlashCommand()
 						.setColor("RED")
 						.setDescription("Lavalink node is not connected"),
 				],
-			});
+			})
 		}
-		
+
 		if (!player) {
 			return interaction.reply({
 				embeds: [
@@ -40,29 +40,29 @@ const command = new SlashCommand()
 						.setDescription("There are no songs to remove."),
 				],
 				ephemeral: true,
-			});
+			})
 		}
-		
-		await interaction.deferReply();
-		
-		const position = Number(args) - 1;
+
+		await interaction.deferReply()
+
+		const position = Number(args) - 1
 		if (position > player.queue.size) {
 			let thing = new MessageEmbed()
 				.setColor(client.config.embedColor)
 				.setDescription(
-					`Current queue has only **${ player.queue.size }** track`,
-				);
-			return interaction.editReply({ embeds: [thing] });
+					`Current queue has only **${player.queue.size}** track`
+				)
+			return interaction.editReply({ embeds: [thing] })
 		}
-		
-		const song = player.queue[position];
-		player.queue.remove(position);
-		
-		const number = position + 1;
+
+		const song = player.queue[position]
+		player.queue.remove(position)
+
+		const number = position + 1
 		let removeEmbed = new MessageEmbed()
 			.setColor(client.config.embedColor)
-			.setDescription(`Removed track number **${ number }** from queue`);
-		return interaction.editReply({ embeds: [removeEmbed] });
-	});
+			.setDescription(`Removed track number **${number}** from queue`)
+		return interaction.editReply({ embeds: [removeEmbed] })
+	})
 
-module.exports = command;
+module.exports = command
